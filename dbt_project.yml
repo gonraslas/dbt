@@ -11,22 +11,22 @@ snapshot-paths: ["snapshots"]
 
 # Configuración de modelos
 models:
-  sbx_medallion:
+  sbx_test:
     bronze:
       +materialized: view          
       salesforce:
-        +database: PRO-BRZ  
+        +database: PRO_BRZ  
         +schema: SALESFORCE    
         +tags: bronze     
     silver:
       +materialized: table          
       logistica:
-        +database: PRO-SLV
+        +database: PRO_SLV
         +schema: RELATIONAL
         +tags: silver
     gold:
       +materialized: table      
       orders_analytical:
-        +database: PRO-GLD
+        +database: PRO_GLD
         +schema: DIMENSIONAL   
         +tags: gold

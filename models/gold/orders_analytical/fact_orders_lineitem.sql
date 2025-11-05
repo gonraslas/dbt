@@ -12,30 +12,31 @@ lineitem as (
     select *
     from {{ ref('lineitem') }}
 )
-
 select
-    li.order_id,
-    li.line_number,
+    o.order_id,
     o.customer_id,
+    o.order_status,
+    o.total_price,
+    o.order_date,
+    o.order_priority,
+    o.clerk_name,
+    o.ship_priority,
+    o.comment as order_commment,
     li.part_id,
     li.supplier_id,
+    li.line_number,
     li.quantity,
     li.extended_price,
     li.discount,
     li.tax,
-    o.order_status,
-    o.order_date,
+    li.return_flag,
+    li.line_status,
     li.ship_date,
     li.commit_date,
     li.receipt_date,
-    o.ship_priority,
-    o.order_priority,
-    o.clerk,
-    li.return_flag,
-    li.line_status,
     li.ship_instructions,
     li.ship_mode,
-    o.total_price
+    li.comment as lin_comment
 from lineitem li
 join orders o
     on li.order_id = o.order_id
