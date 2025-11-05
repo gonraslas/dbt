@@ -16,14 +16,17 @@ models:
       +materialized: view          
       salesforce:
         +database: PRO-BRZ  
-        +schema: SALESFORCE         
+        +schema: SALESFORCE    
+        +tags: bronze     
     silver:
       +materialized: table          
-      salesforce:
+      logistica:
         +database: PRO-SLV
         +schema: RELATIONAL
+        +tags: silver
     gold:
       +materialized: table      
-      core:
+      orders_analytical:
         +database: PRO-GLD
         +schema: DIMENSIONAL   
+        +tags: gold
