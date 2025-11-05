@@ -18,4 +18,4 @@ select
     l_shipinstruct  as ship_instructions,
     l_shipmode      as ship_mode,
     l_comment       as comment
-from source;
+from source
