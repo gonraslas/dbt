@@ -76,7 +76,7 @@ models:
   - name: dim_date
     description: "Dimensión de calendario/fechas, proveniente del Silver model calendar."
     columns:
-      - name: date
+      - name: calendar_date
         description: "Fecha en formato YYYY-MM-DD."
         tests:
           - unique

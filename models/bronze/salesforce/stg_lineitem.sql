@@ -1,5 +1,6 @@
 with source as (
-    select * from {{ source('tpch_sf10', 'lineitem') }}
+    select *
+    from {{ source('tpch_sf10', 'lineitem') }}
 )
 select
     l_orderkey      as order_id,

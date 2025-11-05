@@ -1,6 +1,6 @@
 {{ config(
     materialized='table',
-    cluster_by=['date']
+    cluster_by=['calendar_date']
 ) }}
 
 select *

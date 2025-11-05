@@ -1,14 +1,20 @@
+{{ config(
+    materialized='table',
+    cluster_by=['calendar_date']
+) }}
+
 with dates as (
     select 
         min(order_date) as start_date,
         max(order_date) as end_date
-    from {{ ref('stg_orders') }}
+    from {{ ref('orders') }}  -- Silver orders con nombres amigables
 ),
 calendar as (
+    -- Generamos suficientes días, luego filtramos al rango real
     select
         dateadd(day, seq4(), start_date) as calendar_date
     from dates,
-    table(generator(rowcount => datediff(day, start_date, end_date) + 1))
+    table(generator(rowcount => 10000))  -- ajustar si el rango de fechas es mayor
 )
 select
     calendar_date,
@@ -20,4 +26,5 @@ select
     quarter(calendar_date) as quarter,
     case when dayofweek(calendar_date) in (1,7) then true else false end as is_weekend
 from calendar
+where calendar_date <= (select end_date from dates)
 order by calendar_date
