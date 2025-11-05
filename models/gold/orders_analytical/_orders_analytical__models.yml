@@ -1,0 +1,189 @@
+version: 2
+
+models:
+
+  # -------------------------------
+  # DIMENSIONS
+  # -------------------------------
+
+  - name: dim_customer
+    description: "Dimensión de clientes, proveniente del Silver model customer."
+    columns:
+      - name: customer_id
+        description: "Identificador único del cliente."
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Nombre del cliente."
+      - name: address
+        description: "Dirección del cliente."
+      - name: nation_id
+        description: "Identificador del país del cliente, referencia a dim_nation."
+      - name: phone
+        description: "Teléfono del cliente."
+      - name: acctbal
+        description: "Balance de la cuenta del cliente."
+      - name: mktsegment
+        description: "Segmento de mercado del cliente."
+
+  - name: dim_supplier
+    description: "Dimensión de proveedores, proveniente del Silver model supplier."
+    columns:
+      - name: supplier_id
+        description: "Identificador único del proveedor."
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Nombre del proveedor."
+      - name: address
+        description: "Dirección del proveedor."
+      - name: nation_id
+        description: "Identificador del país del proveedor, referencia a dim_nation."
+      - name: phone
+        description: "Teléfono del proveedor."
+      - name: acctbal
+        description: "Balance de la cuenta del proveedor."
+      - name: comment
+        description: "Comentarios adicionales sobre el proveedor."
+
+  - name: dim_part
+    description: "Dimensión de partes/productos, proveniente del Silver model part."
+    columns:
+      - name: part_id
+        description: "Identificador único del producto."
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Nombre del producto."
+      - name: mfgr
+        description: "Fabricante del producto."
+      - name: brand
+        description: "Marca del producto."
+      - name: type
+        description: "Tipo de producto."
+      - name: size
+        description: "Tamaño del producto."
+      - name: container
+        description: "Tipo de envase del producto."
+      - name: retailprice
+        description: "Precio minorista del producto."
+      - name: comment
+        description: "Comentarios adicionales sobre el producto."
+
+  - name: dim_date
+    description: "Dimensión de calendario/fechas, proveniente del Silver model calendar."
+    columns:
+      - name: date
+        description: "Fecha en formato YYYY-MM-DD."
+        tests:
+          - unique
+          - not_null
+      - name: year
+        description: "Año de la fecha."
+      - name: quarter
+        description: "Trimestre de la fecha."
+      - name: month
+        description: "Mes de la fecha."
+      - name: day
+        description: "Día del mes."
+      - name: week_of_year
+        description: "Semana del año."
+      - name: day_of_week
+        description: "Día de la semana."
+
+  - name: dim_nation
+    description: "Dimensión de naciones, proveniente del Silver model nation."
+    columns:
+      - name: nation_id
+        description: "Identificador único de la nación."
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Nombre de la nación."
+      - name: region_id
+        description: "Identificador de la región a la que pertenece la nación, referencia a dim_region."
+      - name: comment
+        description: "Comentarios sobre la nación."
+
+  - name: dim_region
+    description: "Dimensión de regiones, proveniente del Silver model region."
+    columns:
+      - name: region_id
+        description: "Identificador único de la región."
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Nombre de la región."
+      - name: comment
+        description: "Comentarios sobre la región."
+
+  # -------------------------------
+  # FACT TABLE
+  # -------------------------------
+
+  - name: fact_orders_lineitem
+    description: "Fact table central que combina orders y lineitem, apuntando a los Silver models."
+    columns:
+      - name: order_id
+        description: "Identificador del pedido."
+        tests:
+          - not_null
+      - name: line_number
+        description: "Número de línea dentro del pedido."
+        tests:
+          - not_null
+      - name: customer_id
+        description: "Identificador del cliente, referencia a dim_customer."
+      - name: part_id
+        description: "Identificador del producto, referencia a dim_part."
+      - name: supplier_id
+        description: "Identificador del proveedor, referencia a dim_supplier."
+      - name: quantity
+        description: "Cantidad pedida."
+      - name: extended_price
+        description: "Precio extendido del line item."
+      - name: discount
+        description: "Descuento aplicado."
+      - name: tax
+        description: "Impuesto aplicado."
+      - name: order_status
+        description: "Estado del pedido."
+      - name: order_date
+        description: "Fecha del pedido, referencia a dim_date."
+      - name: ship_date
+        description: "Fecha de envío, referencia a dim_date."
+      - name: commit_date
+        description: "Fecha de commit, referencia a dim_date."
+      - name: receipt_date
+        description: "Fecha de recepción, referencia a dim_date."
+      - name: ship_priority
+        description: "Prioridad de envío."
+      - name: order_priority
+        description: "Prioridad del pedido."
+      - name: clerk
+        description: "Empleado que gestionó el pedido."
+      - name: return_flag
+        description: "Indicador de devolución."
+      - name: line_status
+        description: "Estado de la línea."
+      - name: ship_instructions
+        description: "Instrucciones de envío."
+      - name: ship_mode
+        description: "Modo de envío."
+      - name: total_price
+        description: "Precio total del pedido."
+    tests:
+      - relationships:
+          to: dim_customer
+          field: customer_id
+      - relationships:
+          to: dim_supplier
+          field: supplier_id
+      - relationships:
+          to: dim_part
+          field: part_id

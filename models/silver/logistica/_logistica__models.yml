@@ -1,0 +1,186 @@
+version: 2
+
+models:
+
+  - name: customer
+    description: "Tabla Silver de clientes, basada en staging"
+    columns:
+      - name: customer_id
+        description: "Clave primaria del cliente"
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Nombre del cliente"
+      - name: address
+        description: "Dirección del cliente"
+      - name: nation_name
+        description: "Nombre de la nación del cliente"
+      - name: region_name
+        description: "Nombre de la región del cliente"
+      - name: phone
+        description: "Teléfono del cliente"
+      - name: account_balance
+        description: "Balance de cuenta del cliente"
+      - name: market_segment
+        description: "Segmento de mercado del cliente"
+
+  - name: orders
+    description: "Tabla Silver de pedidos"
+    columns:
+      - name: order_id
+        description: "Clave primaria del pedido"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "FK al cliente"
+      - name: order_status
+        description: "Estado del pedido"
+      - name: total_price
+        description: "Precio total del pedido"
+      - name: order_date
+        description: "Fecha del pedido"
+      - name: order_priority
+        description: "Prioridad del pedido"
+      - name: clerk
+        description: "Empleado responsable del pedido"
+      - name: ship_priority
+        description: "Prioridad de envío"
+
+  - name: lineitem
+    description: "Tabla Silver de líneas de pedido"
+    columns:
+      - name: order_id
+        description: "FK a orders"
+      - name: line_number
+        description: "Número de línea del pedido"
+      - name: part_id
+        description: "FK a part"
+      - name: supplier_id
+        description: "FK a supplier"
+      - name: quantity
+        description: "Cantidad pedida"
+      - name: extended_price
+        description: "Precio extendido"
+      - name: discount
+        description: "Descuento aplicado"
+      - name: tax
+        description: "Impuesto aplicado"
+      - name: return_flag
+        description: "Indicador de devolución"
+      - name: line_status
+        description: "Estado de la línea"
+      - name: ship_date
+        description: "Fecha de envío"
+      - name: commit_date
+        description: "Fecha de commit"
+      - name: receipt_date
+        description: "Fecha de recepción"
+      - name: ship_instructions
+        description: "Instrucciones de envío"
+      - name: ship_mode
+        description: "Modo de envío"
+
+  - name: part
+    description: "Tabla Silver de partes"
+    columns:
+      - name: part_id
+        description: "Clave primaria de la parte"
+        tests:
+          - unique
+          - not_null
+      - name: part_name
+        description: "Nombre de la parte"
+      - name: manufacturer
+        description: "Fabricante de la parte"
+      - name: brand
+        description: "Marca de la parte"
+      - name: type
+        description: "Tipo de parte"
+      - name: size
+        description: "Tamaño de la parte"
+      - name: container
+        description: "Tipo de contenedor"
+      - name: retail_price
+        description: "Precio de venta al público"
+
+  - name: supplier
+    description: "Tabla Silver de proveedores"
+    columns:
+      - name: supplier_id
+        description: "Clave primaria del proveedor"
+        tests:
+          - unique
+          - not_null
+      - name: supplier_name
+        description: "Nombre del proveedor"
+      - name: address
+        description: "Dirección del proveedor"
+      - name: nation_name
+        description: "Nombre de la nación del proveedor"
+      - name: region_name
+        description: "Nombre de la región del proveedor"
+      - name: phone
+        description: "Teléfono del proveedor"
+      - name: account_balance
+        description: "Balance de cuenta del proveedor"
+
+  - name: partsupp
+    description: "Tabla Silver de partes-proveedor (relación muchos a muchos)"
+    columns:
+      - name: part_id
+        description: "FK a part"
+      - name: supplier_id
+        description: "FK a supplier"
+      - name: available_qty
+        description: "Cantidad disponible del proveedor"
+      - name: supply_cost
+        description: "Costo de suministro"
+      - name: comment
+        description: "Comentarios adicionales"
+
+  - name: nation
+    description: "Tabla Silver de naciones"
+    columns:
+      - name: nation_id
+        description: "Clave primaria de la nación"
+        tests:
+          - unique
+          - not_null
+      - name: nation_name
+        description: "Nombre de la nación"
+      - name: region_name
+        description: "Nombre de la región"
+
+  - name: region
+    description: "Tabla Silver de regiones"
+    columns:
+      - name: region_name
+        description: "Nombre de la región"
+        tests:
+          - unique
+          - not_null
+
+  - name: calendar
+    description: "Tabla Silver de calendario"
+    columns:
+      - name: calendar_date
+        description: "Fecha completa"
+        tests:
+          - unique
+          - not_null
+      - name: year
+        description: "Año de la fecha"
+      - name: month
+        description: "Mes de la fecha"
+      - name: day
+        description: "Día del mes"
+      - name: day_of_week
+        description: "Día de la semana (1=Lunes)"
+      - name: week_of_year
+        description: "Número de semana del año"
+      - name: quarter
+        description: "Trimestre del año"
+      - name: is_weekend
+        description: "Indicador de fin de semana (true/false)"

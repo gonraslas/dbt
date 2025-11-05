@@ -1,0 +1,172 @@
+version: 2
+
+sources:
+  - name: tpch_sf10
+    database: SNOWFLAKE_SAMPLE_DATA
+    schema: TPCH_SF10
+    description: >
+      Datos de ejemplo del benchmark TPC-H escala 10 (aprox. 10 GB). 
+      Incluye información de pedidos, clientes, proveedores y logística.
+
+    tables:
+      - name: customer
+        description: >
+          Información de los clientes, incluyendo su segmento de mercado y país.
+        columns:
+          - name: C_CUSTKEY
+            description: Clave primaria del cliente.
+          - name: C_NAME
+            description: Nombre del cliente.
+          - name: C_ADDRESS
+            description: Dirección del cliente.
+          - name: C_NATIONKEY
+            description: Clave foránea que referencia a la tabla NATION.
+          - name: C_PHONE
+            description: Número de teléfono del cliente.
+          - name: C_ACCTBAL
+            description: Balance de cuenta del cliente.
+          - name: C_MKTSEGMENT
+            description: Segmento de mercado al que pertenece el cliente.
+          - name: C_COMMENT
+            description: Comentario libre sobre el cliente.
+
+      - name: orders
+        description: >
+          Información de pedidos realizados por los clientes.
+        columns:
+          - name: O_ORDERKEY
+            description: Clave primaria del pedido.
+          - name: O_CUSTKEY
+            description: Clave del cliente que realiza el pedido.
+          - name: O_ORDERSTATUS
+            description: Estado del pedido (por ejemplo, F = Finalizado).
+          - name: O_TOTALPRICE
+            description: Precio total del pedido.
+          - name: O_ORDERDATE
+            description: Fecha del pedido.
+          - name: O_ORDERPRIORITY
+            description: Prioridad del pedido.
+          - name: O_CLERK
+            description: Identificador del empleado (clerk) que gestionó el pedido.
+          - name: O_SHIPPRIORITY
+            description: Prioridad de envío.
+          - name: O_COMMENT
+            description: Comentario sobre el pedido.
+
+      - name: lineitem
+        description: >
+          Detalle de cada línea de los pedidos, incluyendo artículos, precios y descuentos.
+        columns:
+          - name: L_ORDERKEY
+            description: Clave del pedido (referencia a ORDERS).
+          - name: L_PARTKEY
+            description: Clave de la pieza (referencia a PART).
+          - name: L_SUPPKEY
+            description: Clave del proveedor (referencia a SUPPLIER).
+          - name: L_LINENUMBER
+            description: Número de línea dentro del pedido.
+          - name: L_QUANTITY
+            description: Cantidad pedida.
+          - name: L_EXTENDEDPRICE
+            description: Precio extendido (cantidad * precio unitario).
+          - name: L_DISCOUNT
+            description: Descuento aplicado a la línea.
+          - name: L_TAX
+            description: Impuesto aplicado.
+          - name: L_RETURNFLAG
+            description: Indicador de devolución.
+          - name: L_LINESTATUS
+            description: Estado de la línea.
+          - name: L_SHIPDATE
+            description: Fecha de envío.
+          - name: L_COMMITDATE
+            description: Fecha de compromiso.
+          - name: L_RECEIPTDATE
+            description: Fecha de recepción.
+          - name: L_SHIPINSTRUCT
+            description: Instrucciones de envío.
+          - name: L_SHIPMODE
+            description: Modo de envío (por ejemplo, AIR, TRUCK).
+          - name: L_COMMENT
+            description: Comentario sobre la línea del pedido.
+
+      - name: part
+        description: >
+          Información sobre las piezas o productos disponibles para la venta.
+        columns:
+          - name: P_PARTKEY
+            description: Clave primaria de la pieza.
+          - name: P_NAME
+            description: Nombre de la pieza.
+          - name: P_MFGR
+            description: Fabricante.
+          - name: P_BRAND
+            description: Marca.
+          - name: P_TYPE
+            description: Tipo o categoría de pieza.
+          - name: P_SIZE
+            description: Tamaño.
+          - name: P_CONTAINER
+            description: Tipo de contenedor o empaque.
+          - name: P_RETAILPRICE
+            description: Precio de venta al público.
+          - name: P_COMMENT
+            description: Comentario sobre la pieza.
+
+      - name: partsupp
+        description: >
+          Relación entre piezas y proveedores, con información de coste y disponibilidad.
+        columns:
+          - name: PS_PARTKEY
+            description: Clave de la pieza (referencia a PART).
+          - name: PS_SUPPKEY
+            description: Clave del proveedor (referencia a SUPPLIER).
+          - name: PS_AVAILQTY
+            description: Cantidad disponible.
+          - name: PS_SUPPLYCOST
+            description: Costo del suministro por unidad.
+          - name: PS_COMMENT
+            description: Comentario sobre la relación pieza-proveedor.
+
+      - name: supplier
+        description: >
+          Información de los proveedores que suministran las piezas.
+        columns:
+          - name: S_SUPPKEY
+            description: Clave primaria del proveedor.
+          - name: S_NAME
+            description: Nombre del proveedor.
+          - name: S_ADDRESS
+            description: Dirección del proveedor.
+          - name: S_NATIONKEY
+            description: Clave de la nación del proveedor.
+          - name: S_PHONE
+            description: Teléfono del proveedor.
+          - name: S_ACCTBAL
+            description: Balance de cuenta del proveedor.
+          - name: S_COMMENT
+            description: Comentario sobre el proveedor.
+
+      - name: nation
+        description: >
+          Lista de naciones, usadas para relacionar clientes y proveedores.
+        columns:
+          - name: N_NATIONKEY
+            description: Clave primaria de la nación.
+          - name: N_NAME
+            description: Nombre de la nación.
+          - name: N_REGIONKEY
+            description: Clave de la región a la que pertenece la nación.
+          - name: N_COMMENT
+            description: Comentario sobre la nación.
+
+      - name: region
+        description: >
+          Información sobre regiones geográficas.
+        columns:
+          - name: R_REGIONKEY
+            description: Clave primaria de la región.
+          - name: R_NAME
+            description: Nombre de la región.
+          - name: R_COMMENT
+            description: Comentario sobre la región.
