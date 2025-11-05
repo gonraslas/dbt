@@ -9,4 +9,4 @@ select
     s_phone     as phone,
     s_acctbal   as account_balance,
     s_comment   as comment
-from source;
+from source

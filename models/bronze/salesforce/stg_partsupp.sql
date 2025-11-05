@@ -7,4 +7,4 @@ select
     ps_availqty    as available_quantity,
     ps_supplycost  as supply_cost,
     ps_comment     as comment
-from source;
+from source
