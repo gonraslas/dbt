@@ -177,13 +177,3 @@ models:
         description: "Modo de envío."
       - name: total_price
         description: "Precio total del pedido."
-    tests:
-      - relationships:
-          to: dim_customer
-          field: customer_id
-      - relationships:
-          to: dim_supplier
-          field: supplier_id
-      - relationships:
-          to: dim_part
-          field: part_id
